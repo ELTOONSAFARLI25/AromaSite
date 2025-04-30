@@ -6,43 +6,68 @@ const langCheck = {
       "Home-Shop Category",
       "Главная-Категория магазина",
     ],
-    categories: {
-      header: [
-        "Kateqoriyaları nəzərdən keçirin",
-        "Browse Categories",
-        "Просмотреть категории",
-      ],
+  },
+  categories: {
+    header: ["Kateqoriyalar", "Browse Categories", "Просмотреть категории"],
+    listItems: {
+      men: ["Kişi", "Men", "Мужчины"],
+      women: ["Qadın", "Women", "Женщины"],
+      accessories: ["Aksesuarlar", "Accessories", "Аксессуары"],
+      footwear: ["Ayaqqabı", "Footwear", "Обувь"],
+      electronics: ["Elektronika", "Electronics", "Электроника"],
+      food: ["Qida", "Food", "Еда"],
+    },
+  },
+  filters: {
+    header: ["Məhsul Filtrləri", "Product Filters", "Фильтры продуктов"],
+    mobHeader: ["Filtr", "Filter", "Фильтр"],
+    brands: {
+      header: ["Brendlər", "Brands", "Бренды"],
+    },
+    colors: {
+      header: ["Rənglər", "Colors", "Цвета"],
       listItems: {
-        men: ["Kişi", "Men", "Мужчины"],
-        women: ["Qadın", "Women", "Женщины"],
-        accessories: ["Aksesuarlar", "Accessories", "Аксессуары"],
-        footwear: ["Ayaqqabı", "Footwear", "Обувь"],
-        electronics: ["Elektronika", "Electronics", "Электроника"],
-        food: ["Qida", "Food", "Еда"],
+        black: ["Qara", "Black", "Черный"],
+        black_with_red: [
+          "Qırmızı ilə qara",
+          "Black with reds",
+          "Черный с красным",
+        ],
+        gold: ["Qızıl", "Gold", "Золото"],
+        spacegrey: ["Spacegray", "Spacegrey", "Космический серый"],
       },
     },
-    filters: {
-      header: ["Məhsul Filtrləri", "Product Filters", "Фильтры продуктов"],
-      brands: {
-        header: ["Brendlər", "Brands", "Бренды"],
+  },
+  priceFilter: {
+    header: ["Qiymət", "Price", "Цена"],
+    paragraph: ["Qiymət", "Price", "Цена"],
+  },
+  products: {
+    header: {
+      sorting: {
+        main: ["Çeşidləmə", "Sorting", "Сортировка"],
+        low_to_high: [
+          "Qiymət: Azdan Çoxa",
+          "Price: Low to High",
+          "Цена: по возрастанию",
+        ],
+        high_to_low: [
+          "Qiymət: Çoxdan Aza",
+          " Price: High to Low",
+          "Цена: по убыванию",
+        ],
       },
-      colors: {
-        header: ["Rənglər", "Colors", "Цвета"],
-        listItems: {
-          black: ["Qara", "Black", "Черный"],
-          black_with_red: [
-            "Qırmızı ilə qara",
-            "Black with reds",
-            "Черный с красным",
-          ],
-          gold: ["Qızıl", "Gold", "Золото"],
-          spacegrey: ["Spacegray", "Spacegrey", "Космический серый"],
-        },
-      },
+      search_inp: ["Axtar", "Search", "Поиск"],
     },
-    priceFilter: {
-      header: ["Qiymət", "Price", "Цена"],
-      paragraph: ["Qiymət", "Price", "Цена"],
+  },
+  trending_prods: {
+    header: {
+      title: ["Ən yaxşı məhsullar", "Top Product", "Лучший продукт"],
+      paragraph: [
+        "Bazarda ən yaxşı məhsullar",
+        "Top products in the market",
+        "Лучшие продукты на рынке",
+      ],
     },
   },
 };
