@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import shopCartCss from "./ShoppingCart.module.css";
 import QuantityInput from "../../../components/quantityInput/QuantityInput";
+import { DataContext } from "../../../context/data_context";
+import BasketCard from "../../../components/basketCard/BasketCard";
+import { v4 as uuidv4 } from "uuid";
+import Pagination from "@mui/material/Pagination";
+
 function ShoppingCart() {
-  const [quantity, setQuantity] = useState(1);
+  const store = useContext(DataContext);
+  let basketArr = JSON.parse(localStorage.getItem("basket"));
+  const itemsPerPage = 3;
+  const pageCount = Math.ceil(basketArr.length / itemsPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  function changePage(event, value) {
+    setCurrentPage(value);
+  }
+  let startIndex = (currentPage - 1) * itemsPerPage;
+  let paginatedBasket = basketArr.slice(startIndex, startIndex + itemsPerPage);
   return (
     <>
       <div className={shopCartCss.header}>
@@ -13,66 +27,19 @@ function ShoppingCart() {
       </div>
       <div className={shopCartCss.container}>
         <div className={shopCartCss.products_container}>
-          <div className={shopCartCss.product_card}>
-            <div className={shopCartCss.product_card_image_div}>
-              <img
-                src="https://preview.colorlib.com/theme/aroma/img/cart/cart1.png"
-                alt=""
-              />
-            </div>
-            <p className={shopCartCss.product_name}>
-              Minimalistic shop for multipurpose use
-            </p>
-            <p className={shopCartCss.product_price}>$360.00</p>{" "}
-            <QuantityInput
-              quantity={quantity}
-              setQuantity={setQuantity}
-              className={shopCartCss.product_quantity}
+          {paginatedBasket &&
+            paginatedBasket.map((elem) => {
+              return <BasketCard key={uuidv4()} elem={elem} />;
+            })}
+          <div className={shopCartCss.pagination}>
+            <Pagination
+              count={pageCount}
+              variant="outlined"
+              shape="rounded"
+              onChange={changePage}
             />
-            <p className={shopCartCss.product_total}>
-              TOTAL: ${(360 * quantity).toFixed(2)}
-            </p>
           </div>
-          <div className={shopCartCss.product_card}>
-            <div className={shopCartCss.product_card_image_div}>
-              <img
-                src="https://preview.colorlib.com/theme/aroma/img/cart/cart1.png"
-                alt=""
-              />
-            </div>
-            <p className={shopCartCss.product_name}>
-              Minimalistic shop for multipurpose use
-            </p>
-            <p className={shopCartCss.product_price}>$360.00</p>
-            <QuantityInput
-              quantity={quantity}
-              setQuantity={setQuantity}
-              className={shopCartCss.product_quantity}
-            />
-            <p className={shopCartCss.product_total}>
-              TOTAL: ${(360 * quantity).toFixed(2)}
-            </p>
-          </div>
-          <div className={shopCartCss.product_card}>
-            <div className={shopCartCss.product_card_image_div}>
-              <img
-                src="https://preview.colorlib.com/theme/aroma/img/cart/cart1.png"
-                alt=""
-              />
-            </div>
-            <p className={shopCartCss.product_name}>
-              Minimalistic shop for multipurpose use
-            </p>
-            <p className={shopCartCss.product_price}>$360.00</p>
-            <QuantityInput
-              quantity={quantity}
-              setQuantity={setQuantity}
-              className={shopCartCss.product_quantity}
-            />
-            <p className={shopCartCss.product_total}>
-              TOTAL: ${(360 * quantity).toFixed(2)}
-            </p>
-          </div>{" "}
+
           <div className={shopCartCss.buttons}>
             <button className={shopCartCss.normal_button}>Update Cart</button>
             <div className={shopCartCss.buttons_part_2}>

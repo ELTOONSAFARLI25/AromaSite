@@ -85,6 +85,39 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  border-bottom: 1px solid lightgray;
+  padding: 20px;
+}
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+.blue_btn {
+  padding: 10px;
+  background-color: #384aeb;
+  color: white;
+  border: 1px solid #384aeb;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.normal_btn {
+  padding: 10px;
+  background-color: #f1f6f7;
+  color: black;
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+}
+.normal_btn:hover {
+  border: 1px solid gray;
+}
+.blue_btn:hover {
+  background-color: transparent;
+  color: black;
 }
 .products_header {
   display: flex;
@@ -101,6 +134,7 @@
 }
 .search_input_div {
   position: relative;
+  display: flex;
 }
 .search_input_div input {
   padding: 10px;

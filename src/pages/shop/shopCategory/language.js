@@ -46,6 +46,7 @@ const langCheck = {
     header: {
       sorting: {
         main: ["Çeşidləmə", "Sorting", "Сортировка"],
+        clear: ["Defolt", "Default", "По умолчанию"],
         low_to_high: [
           "Qiymət: Azdan Çoxa",
           "Price: Low to High",

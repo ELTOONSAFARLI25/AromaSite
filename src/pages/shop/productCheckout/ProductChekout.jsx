@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import checkCss from "./ProductCheckout.module.css";
 import { Link } from "react-router-dom";
 import Table from "@mui/material/Table";
@@ -8,39 +8,40 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { DataContext } from "../../../context/data_context";
+import langCheck from "./language";
 function ProductChekout() {
+  const store = useContext(DataContext);
   return (
     <>
       <div className={checkCss.header}>
         <div style={{ textAlign: "center" }}>
-          <h1 style={{ fontWeight: "900" }}>Product Checkout</h1>
-          <p>Shop-Checkout</p>
+          <h1 style={{ fontWeight: "900" }}>
+            {langCheck.heroSection.title[store.lang.data]}
+          </h1>
+          <p>{langCheck.heroSection.paragraph[store.lang.data]}</p>
         </div>
       </div>
       <div className={checkCss.container}>
         <div className={checkCss.div1}>
           <div className={checkCss.div1_header}>
-            <p>Returning Customer? </p>
+            <p>{langCheck.div1.header.paragraph[store.lang.data]} </p>
             <Link style={{ textDecoration: "underline", color: "blue" }}>
               {" "}
-              Click here to login
+              {langCheck.div1.header.link[store.lang.data]}
             </Link>
           </div>
           <div className={checkCss.div1_container}>
-            <p>
-              If you have shopped with us before, please enter your details in
-              the boxes below. If you are a new customer, please proceed to the
-              Billing & Shipping section.
-            </p>
+            <p>{langCheck.div1.body.paragraph[store.lang.data]}</p>
             <form className={checkCss.div1_form1}>
               <input
                 type="text"
-                placeholder="Username or Email*"
+                placeholder={langCheck.div1.body.emailInp[store.lang.data]}
                 className={checkCss.email_input}
               />
               <input
                 type="password"
-                placeholder="Password"
+                placeholder={langCheck.div1.body.passwordInp[store.lang.data]}
                 className={checkCss.password_input}
               />
               <div
@@ -53,36 +54,40 @@ function ProductChekout() {
               >
                 <input
                   type="submit"
-                  value="login"
+                  value={langCheck.div1.body.loginBtn[store.lang.data]}
                   className={checkCss.submit_form1}
                 />
                 <div style={{ display: "flex", gap: "10px" }}>
                   <input type="checkbox" />
-                  <label style={{ color: "gray" }}>Remember me</label>
+                  <label style={{ color: "gray" }}>
+                    {langCheck.div1.body.rememberMe[store.lang.data]}
+                  </label>
                 </div>
               </div>
             </form>
-            <Link style={{ color: "gray" }}>Lost your password?</Link>
+            <Link style={{ color: "gray" }}>
+              {langCheck.div1.body.lostPassword[store.lang.data]}
+            </Link>
           </div>
         </div>
         <div className={checkCss.div2}>
           <div className={checkCss.div1_header}>
-            <p>Have a coupon? </p>
+            <p>{langCheck.div2.header.paragraph[store.lang.data]} </p>
             <Link style={{ textDecoration: "underline", color: "blue" }}>
               {" "}
-              Click here to enter your code
+              {langCheck.div2.header.link[store.lang.data]}
             </Link>
           </div>
           <div className={checkCss.div2_container}>
             <form className={checkCss.div2_form2}>
               <input
                 type="number"
-                placeholder="Enter coupon code"
+                placeholder={langCheck.div2.body.couponCodeInp[store.lang.data]}
                 className={checkCss.coupen_code_input}
               />
               <input
                 type="submit"
-                value="Apply Coupon"
+                value={langCheck.div2.body.applyBtn[store.lang.data]}
                 className={checkCss.submit_form2}
               />
             </form>
@@ -91,78 +96,126 @@ function ProductChekout() {
         <div className={checkCss.div3}>
           <div className={checkCss.div3_container}>
             <p style={{ fontSize: "20px", fontWeight: "700" }}>
-              Billing Details
+              {langCheck.billingDetails.title[store.lang.data]}
             </p>
             <form className={checkCss.div3_form3}>
               <input
                 type="text"
                 style={{ gridArea: "first_name_input" }}
-                placeholder="First Name"
+                placeholder={
+                  langCheck.billingDetails.firstName[store.lang.data]
+                }
               />
               <input
                 type="email"
                 style={{ gridArea: "last_name_input" }}
-                placeholder="Last Name"
+                placeholder={langCheck.billingDetails.lastName[store.lang.data]}
               />
               <input
                 type="text"
                 style={{ gridArea: "company_name_input" }}
-                placeholder="Company Name"
+                placeholder={
+                  langCheck.billingDetails.companyName[store.lang.data]
+                }
               />
               <input
                 type="text"
                 style={{ gridArea: "address1_input" }}
-                placeholder="Address Line-1"
+                placeholder={
+                  langCheck.billingDetails.addressLine1[store.lang.data]
+                }
               />
               <input
                 type="text"
                 style={{ gridArea: "address2_input" }}
-                placeholder="Address Line-2"
+                placeholder={
+                  langCheck.billingDetails.addressLine2[store.lang.data]
+                }
               />
               <select style={{ gridArea: "country_input" }}>
-                <option value="">Country</option>
-                <option value="azerbaijan">Azerbaijan</option>
-                <option value="turkey">Turkey</option>
-                <option value="bangladesh">Bangladesh</option>
+                <option value="">
+                  {
+                    langCheck.billingDetails.countrySelect.country[
+                      store.lang.data
+                    ]
+                  }
+                </option>
+                <option value="azerbaijan">
+                  {
+                    langCheck.billingDetails.countrySelect.azerbaijan[
+                      store.lang.data
+                    ]
+                  }
+                </option>
+                <option value="turkey">
+                  {
+                    langCheck.billingDetails.countrySelect.turkey[
+                      store.lang.data
+                    ]
+                  }
+                </option>
+                <option value="bangladesh">
+                  {
+                    langCheck.billingDetails.countrySelect.bangladesh[
+                      store.lang.data
+                    ]
+                  }
+                </option>
               </select>
               <input
                 type="text"
                 style={{ gridArea: "city_input" }}
-                placeholder="City"
+                placeholder={langCheck.billingDetails.city[store.lang.data]}
               />
               <input
                 type="text"
                 style={{ gridArea: "region_input" }}
-                placeholder="Region"
+                placeholder={langCheck.billingDetails.region[store.lang.data]}
               />
               <select style={{ gridArea: "district_input" }}>
-                <option value="">District</option>
-                <option value="">District</option>
-                <option value="">District</option>
+                <option value="">
+                  {langCheck.billingDetails.district[store.lang.data]}
+                </option>
+                <option value="">
+                  {langCheck.billingDetails.district[store.lang.data]}
+                </option>
+                <option value="">
+                  {langCheck.billingDetails.district[store.lang.data]}
+                </option>
               </select>
               <input
                 type="text"
                 style={{ gridArea: "postcode_input" }}
-                placeholder="Postcode/ZIP"
+                placeholder={langCheck.billingDetails.postcode[store.lang.data]}
               />
               <div style={{ display: "flex", gap: "10px" }}>
                 <input type="checkbox" />
-                <p style={{ color: "gray" }}>Create an account?</p>
+                <p style={{ color: "gray" }}>
+                  {langCheck.billingDetails.createAccount[store.lang.data]}
+                </p>
               </div>
             </form>
             <p style={{ fontSize: "20px", fontWeight: "700" }}>
-              Shipping Details
+              {langCheck.billingDetails.shippingDetails[store.lang.data]}
             </p>
             <div style={{ display: "flex", gap: "10px" }}>
               <input type="checkbox" />
-              <p style={{ color: "gray" }}>Ship to a different address?</p>
+              <p style={{ color: "gray" }}>
+                {langCheck.billingDetails.shippingCheckbox[store.lang.data]}
+              </p>
             </div>
-            <textarea placeholder="Order Notes"></textarea>
+            <textarea
+              placeholder={
+                langCheck.billingDetails.orderMessage[store.lang.data]
+              }
+            ></textarea>
           </div>
         </div>
         <div className={checkCss.div4}>
           <div className={checkCss.div4_container}>
-            <p style={{ fontSize: "20px", fontWeight: "600" }}>Your Order</p>
+            <p style={{ fontSize: "20px", fontWeight: "600" }}>
+              {langCheck.order.title[store.lang.data]}
+            </p>
             <TableContainer
               component={Paper}
               sx={{
@@ -176,16 +229,22 @@ function ProductChekout() {
                 <TableHead>
                   <TableRow>
                     <TableCell sx={{ borderBottom: "none", fontSize: "16px" }}>
-                      <b>Product</b>
+                      <b>
+                        {langCheck.order.table.thead.product[store.lang.data]}
+                      </b>
                     </TableCell>
                     <TableCell sx={{ borderBottom: "none", fontSize: "16px" }}>
-                      <b>Quantity</b>
+                      <b>
+                        {langCheck.order.table.thead.quantity[store.lang.data]}
+                      </b>
                     </TableCell>
                     <TableCell
                       sx={{ borderBottom: "none", fontSize: "16px" }}
                       align="right"
                     >
-                      <b>Total</b>
+                      <b>
+                        {langCheck.order.table.thead.total[store.lang.data]}
+                      </b>
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -272,7 +331,9 @@ function ProductChekout() {
                       fontSize: "16px",
                     }}
                   >
-                    <b>SUBTOTAL</b>
+                    <b>
+                      {langCheck.order.table.tbody.subtotal[store.lang.data]}
+                    </b>
                   </TableCell>{" "}
                   <TableCell></TableCell>
                   <TableCell
@@ -293,7 +354,9 @@ function ProductChekout() {
                       fontSize: "16px",
                     }}
                   >
-                    <b>SHIPPING</b>
+                    <b>
+                      {langCheck.order.table.tbody.shipping[store.lang.data]}
+                    </b>
                   </TableCell>
                   <TableCell></TableCell>
                   <TableCell
@@ -304,7 +367,8 @@ function ProductChekout() {
                     }}
                     align="right"
                   >
-                    Flate Rate:$50.00
+                    {langCheck.order.table.tbody.flat_rate[store.lang.data]}
+                    :$50.00
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -314,7 +378,7 @@ function ProductChekout() {
                       fontSize: "16px",
                     }}
                   >
-                    <b>TOTAL</b>
+                    <b>{langCheck.order.table.tfoot.total[store.lang.data]}</b>
                   </TableCell>{" "}
                   <TableCell></TableCell>
                   <TableCell
@@ -333,18 +397,17 @@ function ProductChekout() {
             <form className={checkCss.payment_form}>
               <div style={{ display: "flex", gap: "10px" }}>
                 <input type="radio" name="payment" />
-                <p>Check Payments</p>
+                <p>{langCheck.order.checkPayment.title[store.lang.data]}</p>
               </div>
               <div style={{ padding: "20px", backgroundColor: "white" }}>
                 <p style={{ fontSize: "14px", color: "gray" }}>
-                  Please send a check to Store Name, Store Street, Store Town,
-                  Store State / County, Store Postcode.
+                  {langCheck.order.checkPayment.paragraph[store.lang.data]}
                 </p>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", gap: "10px" }}>
                   <input type="radio" name="payment" />
-                  <p>PayPal</p>
+                  <p>{langCheck.order.paypal.title[store.lang.data]}</p>
                 </div>
                 <img
                   style={{ width: "70px", height: "20px" }}
@@ -354,22 +417,18 @@ function ProductChekout() {
               </div>
               <div style={{ padding: "20px", backgroundColor: "white" }}>
                 <p style={{ fontSize: "14px", color: "gray" }}>
-                  Pay via PayPal; you can pay with your credit card if you don’t
-                  have a PayPal account.
+                  {langCheck.order.paypal.paragraph[store.lang.data]}
                 </p>
               </div>
               <div style={{ display: "flex", gap: "10px" }}>
                 <input type="checkbox" required />
                 <p style={{ fontSize: "13px" }}>
-                  I’ve read and accept the{" "}
-                  <a href="" style={{ color: "blue" }}>
-                    terms & conditions
-                  </a>
+                  {langCheck.order.terms[store.lang.data]}
                 </p>
               </div>
               <input
                 type="submit"
-                value="Proceed to Payment"
+                value={langCheck.order.proceedBtn[store.lang.data]}
                 className={checkCss.submit_payment_form}
               />
             </form>

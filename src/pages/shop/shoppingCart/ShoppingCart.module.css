@@ -55,6 +55,9 @@ th {
   border-bottom: 1px solid lightgray;
   padding: 0 0 10px 0;
 }
+.pagination {
+  margin: auto;
+}
 .product_card_image_div {
   width: 180px;
   grid-area: product_img;

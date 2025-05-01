@@ -1,0 +1,28 @@
+.product_card {
+  display: grid;
+  grid-template-areas: "product_img product_name product_price product_quantity product_total";
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  padding: 0 0 10px 0;
+}
+.product_card_image_div {
+  width: 180px;
+  grid-area: product_img;
+}
+.product_card_image_div img {
+  width: 100%;
+  object-fit: cover;
+}
+.product_name {
+  grid-area: product_name;
+}
+.product_price {
+  grid-area: product_price;
+}
+.product_quantity {
+  grid-area: product_quantity;
+}
+.product_total {
+  grid-area: product_total;
+  font-weight: 800;
+}

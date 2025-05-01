@@ -11,7 +11,6 @@ import { DataContext } from "../../context/data_context";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   let store = useContext(DataContext);
-  console.log(langCheck);
   return (
     <>
       <nav>

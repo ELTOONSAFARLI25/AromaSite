@@ -3,11 +3,17 @@ import { createContext, useEffect, useState } from "react";
 
 export const DataContext = createContext("");
 function DataProvider({ children }) {
+  let basketArr = JSON.parse(localStorage.getItem("basket"));
   const products_url = "https://680d217ec47cb8074d8fa303.mockapi.io/products";
   const [products, setProducts] = useState([]);
   const [lang, setLang] = useState(0);
   const [theme, setTheme] = useState("");
+  const [basket, setBasket] = useState([]);
+
   useEffect(() => {
+    if (basketArr) {
+      setBasket(basketArr);
+    }
     axios(products_url).then((res) => {
       setProducts(res.data);
     });
@@ -24,6 +30,10 @@ function DataProvider({ children }) {
     products: {
       data: products,
       setData: setProducts,
+    },
+    basket: {
+      data: basket,
+      setData: setBasket,
     },
   };
 

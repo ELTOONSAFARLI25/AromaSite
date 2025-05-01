@@ -7,29 +7,102 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import Box from "@mui/material/Box";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
 import { DataContext } from "../../../context/data_context";
 import langCheck from "./language";
+import ProductCard from "../../../components/card/ProductCard";
+
 function ShopCategory() {
+  //---- sorting -----
   const [sorting, setSorting] = React.useState("");
-  const handleChangeAge = (event) => {
+  const handleChangeSorting = (event) => {
     setSorting(event.target.value);
   };
-  const [value, setValue] = useState([0, 3500]);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  useEffect(() => {
+    console.log(sorting);
+    if (sorting == "low_to_high") {
+      setResultProds([...resultProds].sort((a, b) => a.price - b.price));
+    } else if (sorting == "high_to_low") {
+      setResultProds([...resultProds].sort((a, b) => b.price - a.price));
+    } else if (sorting == "default") {
+      setResultProds(products);
+    }
+  }, [sorting]);
+  //---- searching -------
+  const [searchInput, setSearchInput] = useState("");
+  const [query, setQuery] = useState("");
+  function searchFunction() {
+    setResultProds(
+      filteredProds.filter((elem) =>
+        elem.title.toLowerCase().includes(searchInput.toLowerCase())
+      )
+    );
+    setQuery(searchInput);
+    setSearchInput("");
+  }
+  const [isSearched, setIsSearched] = useState(false);
+  function clearSearch() {
+    setIsSearched(false);
+    setResultProds(products);
+  }
+
+  //---- side bar --------
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const toggleSideBar = () => {
     setIsOpenSideBar(!isOpenSideBar);
   };
+  //---------------------
   let store = useContext(DataContext);
   let products = store.products.data;
+
+  //---- price filter ------
+  const [priceFilter, setPriceFilter] = useState([0, 1000]);
+  const [filteredProds, setFilteredProds] = useState(products);
+  const handleChangePriceFilter = (event, newValue) => {
+    setPriceFilter(newValue);
+  };
+  const [resultProds, setResultProds] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 0]);
+  useEffect(() => {
+    if (products?.length > 0) {
+      const prices = products.map((p) => p.price);
+      const minPrice = Math.min(...prices);
+      const maxPrice = Math.max(...prices);
+      setPriceRange([minPrice, maxPrice]);
+      setPriceFilter([minPrice, maxPrice]);
+      setResultProds(products);
+      setFilteredProds(products);
+    }
+  }, [products]);
+  function filterByPrice() {
+    setResultProds(
+      products?.filter(
+        (elem) => elem.price >= priceFilter[0] && elem.price <= priceFilter[1]
+      )
+    );
+    setFilteredProds(
+      products?.filter(
+        (elem) => elem.price >= priceFilter[0] && elem.price <= priceFilter[1]
+      )
+    );
+  }
+  function clearFilterByPrice() {
+    setResultProds(products);
+    setPriceFilter([priceRange[0], priceRange[1]]);
+    window.location.reload();
+  }
+  //---- color filter ----
+  const [colorFilter, setColorFilter] = useState("");
+  function filterByColor() {
+    setResultProds(filteredProds?.filter((elem) => elem.color == colorFilter));
+  }
+  function clearFilterByColor() {
+    setResultProds(filteredProds);
+    setColorFilter("");
+  }
   let topProducts = [...products].sort((a, b) => b.price - a.price);
   return (
     <>
@@ -163,7 +236,13 @@ function ShopCategory() {
                 <p> {langCheck.filters.colors.header[store.lang.data]}</p>{" "}
                 <ul>
                   <li>
-                    <input type="radio" name="color" />
+                    <input
+                      type="radio"
+                      name="color"
+                      onChange={(e) => {
+                        setColorFilter("black");
+                      }}
+                    />
                     <label>
                       {
                         langCheck.filters.colors.listItems.black[
@@ -175,7 +254,13 @@ function ShopCategory() {
                   </li>
 
                   <li>
-                    <input type="radio" name="color" />
+                    <input
+                      type="radio"
+                      name="color"
+                      onChange={(e) => {
+                        setColorFilter("black_red");
+                      }}
+                    />
                     <label>
                       {
                         langCheck.filters.colors.listItems.black_with_red[
@@ -186,14 +271,26 @@ function ShopCategory() {
                     </label>
                   </li>
                   <li>
-                    <input type="radio" name="color" />
+                    <input
+                      type="radio"
+                      name="color"
+                      onChange={(e) => {
+                        setColorFilter("gold");
+                      }}
+                    />
                     <label>
                       {langCheck.filters.colors.listItems.gold[store.lang.data]}
                       (19)
                     </label>
                   </li>
                   <li>
-                    <input type="radio" name="color" />
+                    <input
+                      type="radio"
+                      name="color"
+                      onChange={(e) => {
+                        setColorFilter("spacegray");
+                      }}
+                    />
                     <label>
                       {
                         langCheck.filters.colors.listItems.spacegrey[
@@ -204,22 +301,50 @@ function ShopCategory() {
                     </label>
                   </li>
                 </ul>
+                <div className={shopCss.buttons}>
+                  <button className={shopCss.blue_btn} onClick={filterByColor}>
+                    Go
+                  </button>
+                  <button
+                    className={shopCss.normal_btn}
+                    onClick={clearFilterByColor}
+                  >
+                    Clear{" "}
+                    <DeleteOutlinedIcon
+                      style={{ color: "gray", fontSize: "15px" }}
+                    />
+                  </button>
+                </div>
               </div>
               <div className={shopCss.price_filter}>
                 <p>{langCheck.priceFilter.header[store.lang.data]}</p>
                 <Slider
-                  value={value}
-                  onChange={handleChange}
+                  value={priceFilter}
+                  onChange={handleChangePriceFilter}
                   valueLabelDisplay="auto"
-                  min={0}
-                  max={10000}
-                  step={1000}
+                  min={priceRange[0]}
+                  max={priceRange[1]}
+                  step={1}
                 />
                 <p style={{ fontSize: "13px" }}>
                   {" "}
                   {langCheck.priceFilter.paragraph[store.lang.data]}: $
-                  {value[0].toFixed(2)} - ${value[1].toFixed(2)}
+                  {priceFilter[0].toFixed(2)} - ${priceFilter[1].toFixed(2)}
                 </p>
+                <div className={shopCss.buttons}>
+                  <button className={shopCss.blue_btn} onClick={filterByPrice}>
+                    Go
+                  </button>
+                  <button
+                    className={shopCss.normal_btn}
+                    onClick={clearFilterByPrice}
+                  >
+                    Clear{" "}
+                    <DeleteOutlinedIcon
+                      style={{ color: "gray", fontSize: "15px" }}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -241,9 +366,12 @@ function ShopCategory() {
                     id="demo-simple-select"
                     value={sorting}
                     label="Sorting"
-                    onChange={handleChangeAge}
+                    onChange={handleChangeSorting}
                     className={shopCss.select}
                   >
+                    <MenuItem value={"default"}>
+                      {langCheck.products.header.sorting.clear[store.lang.data]}
+                    </MenuItem>
                     <MenuItem value={"low_to_high"}>
                       {
                         langCheck.products.header.sorting.low_to_high[
@@ -262,57 +390,64 @@ function ShopCategory() {
                 </FormControl>
               </Box>
             </div>
-            <div className={shopCss.search_input_div}>
-              <input
-                type="text"
-                placeholder={
-                  langCheck.products.header.search_inp[store.lang.data]
-                }
-              />
-              <button className={shopCss.search_btn}>
-                <SearchIcon />
+            <div style={{ display: "flex" }}>
+              <div className={shopCss.search_input_div}>
+                <form>
+                  <input
+                    type="text"
+                    value={searchInput}
+                    placeholder={
+                      langCheck.products.header.search_inp[store.lang.data]
+                    }
+                    onChange={(e) => {
+                      setSearchInput(e.target.value);
+                    }}
+                  />
+
+                  <button
+                    type="submit"
+                    className={shopCss.search_btn}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      searchFunction();
+                      setIsSearched(true);
+                    }}
+                  >
+                    <SearchIcon />
+                  </button>
+                </form>
+              </div>{" "}
+              <button className={shopCss.blue_btn} onClick={clearSearch}>
+                Clear Search
               </button>
             </div>
           </div>
-          <div className={shopCss.products_div}>
-            {products &&
-              products.map((elem) => {
-                return (
-                  <div className={shopCss.product_card} key={uuidv4()}>
-                    <div className={shopCss.product_card_image_div}>
-                      <img
-                        src={elem.image_url}
-                        alt=""
-                        className={shopCss.product_card_image}
-                      />
-                      <div className={shopCss.product_card_buttons}>
-                        <Link to={`/product-details/${elem.id}`}>
-                          <button>
-                            <SearchIcon />
-                          </button>
-                        </Link>
-
-                        <button>
-                          <FavoriteBorderIcon />
-                        </button>
-                        <button>
-                          <AddShoppingCartIcon />
-                        </button>
-                      </div>
-                    </div>
-                    <div className={shopCss.product_card_details}>
-                      <p>{elem.category}</p>
-                      <h1>{elem.title}</h1>
-                      <h3>${elem.price}</h3>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
+          {isSearched ? (
+            <p style={{ fontSize: "20px", margin: "10px" }}>
+              Results of <i>"{query}"</i> query
+            </p>
+          ) : null}
+          {resultProds.length > 0 ? (
+            <div className={shopCss.products_div}>
+              {resultProds &&
+                resultProds.map((elem) => {
+                  return <ProductCard key={uuidv4()} elem={elem} />;
+                })}
+            </div>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <h1>Not matching products</h1>
+            </div>
+          )}
         </div>
       </div>
       <div className={shopCss.trending_products_container}>
-        {" "}
         <div className={shopCss.products_container}>
           <div className={shopCss.products_title}>
             <p>{langCheck.trending_prods.header.paragraph[store.lang.data]}</p>

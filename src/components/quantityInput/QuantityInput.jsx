@@ -1,8 +1,9 @@
-import { forwardRef, React, useState } from "react";
+import { forwardRef, React, useContext, useState } from "react";
 import { Unstable_NumberInput as BaseNumberInput } from "@mui/base/Unstable_NumberInput";
 import { styled } from "@mui/system";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import { DataContext } from "../../context/data_context";
 
 const NumberInput = forwardRef(function CustomNumberInput(props, ref) {
   return (
@@ -28,16 +29,30 @@ const NumberInput = forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-export default function QuantityInput({ count, quantity, setQuantity }) {
+export default function QuantityInput({ count, quantity, setQuantity, elem }) {
+  const store = useContext(DataContext);
+  let basketArr = JSON.parse(localStorage.getItem("basket"));
+  [];
+  function updateQuantity(id, newQuantity) {
+    const updatedBasket = basketArr.map((item) => {
+      if (item.product.id == id) {
+        return { ...item, quantity: newQuantity };
+      } else return item;
+    });
+    store.basket.setData(updatedBasket);
+    localStorage.setItem("basket", JSON.stringify(updatedBasket));
+  }
+
   const handleChange = (event, newValue) => {
     setQuantity(newValue);
+    updateQuantity(elem.product.id, newValue);
   };
   return (
     <NumberInput
       aria-label="Quantity Input"
       min={1}
       max={count}
-      defaultValue={1}
+      defaultValue={quantity}
       onChange={handleChange}
     />
   );
