@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DataContext } from "../../../context/data_context";
 import langCheck from "./language";
 import ProductCard from "../../../components/card/ProductCard";
+import Pagination from "@mui/material/Pagination";
 
 function ShopCategory() {
   //---- sorting -----
@@ -104,6 +105,20 @@ function ShopCategory() {
     setColorFilter("");
   }
   let topProducts = [...products].sort((a, b) => b.price - a.price);
+  //---- pagination ----
+  const itemsPerPage = 9;
+  const pageCount = Math.ceil(resultProds.length / itemsPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  function changePage(event, value) {
+    setCurrentPage(value);
+    console.log(value);
+  }
+  let startIndex = (currentPage - 1) * itemsPerPage;
+  let paginatedBasket = resultProds.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
   return (
     <>
       <div className={shopCss.header}>
@@ -351,7 +366,7 @@ function ShopCategory() {
         </div>
         <div className={shopCss.products_container}>
           <div className={shopCss.products_header}>
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div className={shopCss.products_header_filters}>
               {" "}
               <button className={shopCss.filter_btn} onClick={toggleSideBar}>
                 <FilterAltIcon style={{ color: "#384aeb" }} />
@@ -418,33 +433,36 @@ function ShopCategory() {
                 </form>
               </div>{" "}
               <button className={shopCss.blue_btn} onClick={clearSearch}>
-                Clear Search
+                {langCheck.products.header.clearSearch[store.lang.data]}
               </button>
             </div>
           </div>
           {isSearched ? (
-            <p style={{ fontSize: "20px", margin: "10px" }}>
-              Results of <i>"{query}"</i> query
+            <p className={shopCss.resultOf}>
+              {langCheck.products.resultOf[store.lang.data]} <i>"{query}"</i>
             </p>
           ) : null}
-          {resultProds.length > 0 ? (
-            <div className={shopCss.products_div}>
-              {resultProds &&
-                resultProds.map((elem) => {
-                  return <ProductCard key={uuidv4()} elem={elem} />;
-                })}
-            </div>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <h1>Not matching products</h1>
-            </div>
-          )}
+          <div className={shopCss.products_div}>
+            {" "}
+            {paginatedBasket.length > 0 ? (
+              paginatedBasket.map((elem) => {
+                return <ProductCard key={uuidv4()} elem={elem} />;
+              })
+            ) : (
+              <div className={shopCss.nothingFound}>
+                <h1>{langCheck.products.notMatching[store.lang.data]}</h1>
+              </div>
+            )}
+          </div>
+
+          <div className={shopCss.pagination}>
+            <Pagination
+              count={pageCount}
+              variant="outlined"
+              shape="rounded"
+              onChange={changePage}
+            />
+          </div>
         </div>
       </div>
       <div className={shopCss.trending_products_container}>

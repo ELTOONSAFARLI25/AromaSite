@@ -61,3 +61,25 @@ h3 {
 .product_card:hover .product_card_buttons {
   opacity: 1;
 }
+@media (max-width: 550px) {
+  .product_card {
+    width: 400px;
+    height: 500px;
+    margin: auto;
+  }
+  .product_card_image_div {
+    width: 400px;
+    height: 400px;
+  }
+}
+@media (max-width: 440px) {
+  .product_card {
+    width: 300px;
+    height: 400px;
+    margin: auto;
+  }
+  .product_card_image_div {
+    width: 300px;
+    height: 300px;
+  }
+}

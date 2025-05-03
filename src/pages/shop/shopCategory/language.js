@@ -7,6 +7,7 @@ const langCheck = {
       "Главная-Категория магазина",
     ],
   },
+
   categories: {
     header: ["Kateqoriyalar", "Browse Categories", "Просмотреть категории"],
     listItems: {
@@ -23,6 +24,10 @@ const langCheck = {
     mobHeader: ["Filtr", "Filter", "Фильтр"],
     brands: {
       header: ["Brendlər", "Brands", "Бренды"],
+      buttons: {
+        go: ["Get", "Go", "Идти"],
+        clear: ["Təmiz", "Clear", "Прозрачный"],
+      },
     },
     colors: {
       header: ["Rənglər", "Colors", "Цвета"],
@@ -36,11 +41,19 @@ const langCheck = {
         gold: ["Qızıl", "Gold", "Золото"],
         spacegrey: ["Spacegray", "Spacegrey", "Космический серый"],
       },
+      buttons: {
+        go: ["Get", "Go", "Идти"],
+        clear: ["Təmiz", "Clear", "Прозрачный"],
+      },
     },
   },
   priceFilter: {
     header: ["Qiymət", "Price", "Цена"],
     paragraph: ["Qiymət", "Price", "Цена"],
+    buttons: {
+      go: ["Get", "Go", "Идти"],
+      clear: ["Təmiz", "Clear", "Прозрачный"],
+    },
   },
   products: {
     header: {
@@ -59,7 +72,14 @@ const langCheck = {
         ],
       },
       search_inp: ["Axtar", "Search", "Поиск"],
+      clearSearch: ["Axtarışı silin", "Clear Search", "Очистить поиск"],
     },
+    resultOf: ["Nəticələr:", "Results of", "Результаты"],
+    notMatching: [
+      "Uyğun məhsul yoxdur",
+      "No matching products",
+      "Нет соответствующих продуктов",
+    ],
   },
   trending_prods: {
     header: {
