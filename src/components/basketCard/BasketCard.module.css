@@ -1,6 +1,7 @@
 .product_card {
   display: grid;
-  grid-template-areas: "product_img product_name product_price product_quantity product_total";
+  grid-template-areas: "product_img product_name product_price product_quantity product_total remove_item";
+
   align-items: center;
   border-bottom: 1px solid lightgray;
   padding: 0 0 10px 0;
@@ -25,4 +26,34 @@
 .product_total {
   grid-area: product_total;
   font-weight: 800;
+}
+.remove_item {
+  grid-area: remove_item;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 25px;
+}
+@media (max-width: 430px) {
+  .product_card_image_div {
+    width: 90px;
+  }
+  .product_card {
+    grid-template-areas:
+      "product_img product_name product_price product_quantity"
+      "product_img product_name product_total remove_item ";
+  }
+  .product_card p {
+    font-size: 10px;
+  }
+}
+@media (max-width: 325px) {
+  .product_card {
+    grid-template-areas:
+      "product_img product_name product_price product_total"
+      "product_img product_quantity remove_item remove_item ";
+  }
+  .product_card_image_div {
+    width: 50px;
+  }
 }

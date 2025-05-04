@@ -10,8 +10,16 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { DataContext } from "../../../context/data_context";
 import langCheck from "./language";
+import { v4 as uuidv4 } from "uuid";
+
 function ProductChekout() {
   const store = useContext(DataContext);
+  const basketArr = JSON.parse(localStorage.getItem("basket"));
+  let subtotal = 0;
+  basketArr?.map((elem) => {
+    subtotal += elem.quantity * elem.product.price;
+  });
+  const flat_rate = 50;
   return (
     <>
       <div className={checkCss.header}>
@@ -249,78 +257,40 @@ function ProductChekout() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell
-                      sx={{
-                        borderBottom: "none",
-                        fontSize: "16px",
-                        color: "gray",
-                      }}
-                    >
-                      Fresh Blackberry
-                    </TableCell>
-                    <TableCell sx={{ borderBottom: "none", fontSize: "16px" }}>
-                      x02
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        borderBottom: "none",
-                        fontSize: "16px",
-                        color: "gray",
-                      }}
-                      align="right"
-                    >
-                      $720.00
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell
-                      sx={{
-                        borderBottom: "none",
-                        fontSize: "16px",
-                        color: "gray",
-                      }}
-                    >
-                      Bag
-                    </TableCell>
-                    <TableCell sx={{ borderBottom: "none", fontSize: "16px" }}>
-                      x01
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        borderBottom: "none",
-                        fontSize: "16px",
-                        color: "gray",
-                      }}
-                      align="right"
-                    >
-                      $150.00
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell
-                      sx={{
-                        borderBottom: "none",
-                        fontSize: "16px",
-                        color: "gray",
-                      }}
-                    >
-                      Bag
-                    </TableCell>
-                    <TableCell sx={{ borderBottom: "none", fontSize: "16px" }}>
-                      x03
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        borderBottom: "none",
-                        fontSize: "16px",
-                        color: "gray",
-                      }}
-                      align="right"
-                    >
-                      $720.00
-                    </TableCell>
-                  </TableRow>
+                  {basketArr &&
+                    basketArr?.map((elem) => {
+                      return (
+                        <TableRow>
+                          <TableCell
+                            sx={{
+                              borderBottom: "none",
+                              fontSize: "16px",
+                              color: "gray",
+                            }}
+                          >
+                            {elem.product.title}
+                          </TableCell>
+                          <TableCell
+                            sx={{ borderBottom: "none", fontSize: "16px" }}
+                          >
+                            x
+                            {elem.quantity < 10
+                              ? `0${elem.quantity}`
+                              : elem.quantity}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              borderBottom: "none",
+                              fontSize: "16px",
+                              color: "gray",
+                            }}
+                            align="right"
+                          >
+                            ${elem.quantity * elem.product.price}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                 </TableBody>
               </Table>
               <Table>
@@ -344,7 +314,7 @@ function ProductChekout() {
                     }}
                     align="right"
                   >
-                    $2160.00
+                    ${subtotal.toFixed(2)}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -367,8 +337,8 @@ function ProductChekout() {
                     }}
                     align="right"
                   >
-                    {langCheck.order.table.tbody.flat_rate[store.lang.data]}
-                    :$50.00
+                    {langCheck.order.table.tbody.flat_rate[store.lang.data]}: $
+                    {flat_rate.toFixed(2)}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -389,7 +359,7 @@ function ProductChekout() {
                     }}
                     align="right"
                   >
-                    <b>2210.00</b>$
+                    $<b>{(subtotal + flat_rate).toFixed(2)}</b>
                   </TableCell>
                 </TableRow>
               </Table>

@@ -16,6 +16,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { Link } from "react-router-dom";
 import langCheck from "./language";
 import { DataContext } from "../../context/data_context";
+import ProductCard from "../../components/card/ProductCard";
 function Home() {
   let store = useContext(DataContext);
   let products = store.products.data;
@@ -95,36 +96,10 @@ function Home() {
         </div>
         <div className={homeCss.products_div}>
           {products &&
-            products.map((elem) => {
-              return (
-                <div className={homeCss.product_card} key={uuidv4()}>
-                  <div className={homeCss.product_card_image_div}>
-                    <img
-                      src={elem.image_url}
-                      alt=""
-                      className={homeCss.product_card_image}
-                    />
-                    <div className={homeCss.product_card_buttons}>
-                      <Link to={`/product-details/${elem.id}`}>
-                        <button>
-                          <SearchIcon />
-                        </button>
-                      </Link>
-                      <button>
-                        <FavoriteBorderIcon />
-                      </button>
-                      <button>
-                        <AddShoppingCartIcon />
-                      </button>
-                    </div>
-                  </div>
-                  <div className={homeCss.product_card_details}>
-                    <p>{elem.category}</p>
-                    <h1>{elem.title}</h1>
-                    <h3>${elem.price}</h3>
-                  </div>
-                </div>
-              );
+            products.map((elem, index) => {
+              if (index < 8) {
+                return <ProductCard elem={elem} key={uuidv4()} />;
+              }
             })}
         </div>
       </div>
@@ -171,33 +146,7 @@ function Home() {
               products.map((elem) => {
                 return (
                   <SwiperSlide>
-                    <div className={homeCss.product_card} key={uuidv4()}>
-                      <div className={homeCss.product_card_image_div}>
-                        <img
-                          src={elem.image_url}
-                          alt=""
-                          className={homeCss.product_card_image}
-                        />
-                        <div className={homeCss.product_card_buttons}>
-                          <Link to={`/product-details/${elem.id}`}>
-                            <button>
-                              <SearchIcon />
-                            </button>
-                          </Link>
-                          <button>
-                            <FavoriteBorderIcon />
-                          </button>
-                          <button>
-                            <AddShoppingCartIcon />
-                          </button>
-                        </div>
-                      </div>
-                      <div className={homeCss.product_card_details}>
-                        <p>{elem.category}</p>
-                        <h1>{elem.title}</h1>
-                        <h3>${elem.price}</h3>
-                      </div>
-                    </div>
+                    <ProductCard elem={elem} key={uuidv4()} />
                   </SwiperSlide>
                 );
               })}

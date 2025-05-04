@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import confirmCss from "./Confirmation.module.css";
+import { DataContext } from "../../../context/data_context";
 function Confirmation() {
+  const store = useContext(DataContext);
+  const basketArr = JSON.parse(localStorage.getItem("basket"));
+  let subtotal = 0;
+  basketArr?.map((elem) => {
+    subtotal += elem.quantity * elem.product.price;
+  });
+  const flat_rate = 50;
+
   return (
     <>
       <div className={confirmCss.header}>
@@ -98,37 +107,39 @@ function Confirmation() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Pixelstore fresh Blackberry</td>
-                <td>x 02</td>
-                <td style={{ color: "gray" }}>$720.00</td>
-              </tr>
-              <tr>
-                <td style={{ color: "gray" }}>Pixelstore fresh Blackberry</td>
-                <td>x 02</td>
-                <td style={{ color: "gray" }}>$720.00</td>
-              </tr>
-              <tr>
-                <td style={{ color: "gray" }}>Pixelstore fresh Blackberry</td>
-                <td>x 02</td>
-                <td style={{ color: "gray" }}>$720.00</td>
-              </tr>
+              {basketArr?.map((elem) => {
+                return (
+                  <tr>
+                    <td>{elem.product.title}</td>
+                    <td>
+                      x
+                      {elem.quantity < 10 ? `0${elem.quantity}` : elem.quantity}
+                    </td>
+                    <td style={{ color: "gray" }}>
+                      ${(elem.quantity * elem.product.price).toFixed(2)}
+                    </td>
+                  </tr>
+                );
+              })}
+
               <tr>
                 <td> SUBTOTAL</td>
                 <td></td>
-                <td style={{ color: "gray" }}>$2160.00</td>
+                <td style={{ color: "gray" }}>${subtotal.toFixed(2)}</td>
               </tr>
               <tr>
                 <td> SHIPPING</td>
                 <td></td>
-                <td style={{ color: "gray" }}>Flat rate: $50.00</td>
+                <td style={{ color: "gray" }}>
+                  Flat rate: ${flat_rate.toFixed(2)}
+                </td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
                 <td>TOTAL</td>
                 <td></td>
-                <td>$180</td>
+                <td>${(subtotal + flat_rate).toFixed(2)}</td>
               </tr>
             </tfoot>
           </table>

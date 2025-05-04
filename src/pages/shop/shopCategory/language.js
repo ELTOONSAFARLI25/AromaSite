@@ -18,6 +18,10 @@ const langCheck = {
       electronics: ["Elektronika", "Electronics", "Электроника"],
       food: ["Qida", "Food", "Еда"],
     },
+    buttons: {
+      go: ["Get", "Go", "Идти"],
+      clear: ["Təmizlə", "Clear", "Прозрачный"],
+    },
   },
   filters: {
     header: ["Məhsul Filtrləri", "Product Filters", "Фильтры продуктов"],
@@ -43,7 +47,7 @@ const langCheck = {
       },
       buttons: {
         go: ["Get", "Go", "Идти"],
-        clear: ["Təmiz", "Clear", "Прозрачный"],
+        clear: ["Təmizlə", "Clear", "Прозрачный"],
       },
     },
   },
@@ -52,7 +56,7 @@ const langCheck = {
     paragraph: ["Qiymət", "Price", "Цена"],
     buttons: {
       go: ["Get", "Go", "Идти"],
-      clear: ["Təmiz", "Clear", "Прозрачный"],
+      clear: ["Təmizlə", "Clear", "Прозрачный"],
     },
   },
   products: {

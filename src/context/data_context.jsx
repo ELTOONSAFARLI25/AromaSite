@@ -6,10 +6,10 @@ function DataProvider({ children }) {
   let basketArr = JSON.parse(localStorage.getItem("basket"));
   const products_url = "https://680d217ec47cb8074d8fa303.mockapi.io/products";
   const [products, setProducts] = useState([]);
-  const [lang, setLang] = useState(0);
+  const [lang, setLang] = useState(1);
   const [theme, setTheme] = useState("");
   const [basket, setBasket] = useState([]);
-
+  const langLocal = JSON.parse(localStorage.getItem("lang"));
   useEffect(() => {
     if (basketArr) {
       setBasket(basketArr);
@@ -17,7 +17,14 @@ function DataProvider({ children }) {
     axios(products_url).then((res) => {
       setProducts(res.data);
     });
+    if (langLocal >= 0) {
+      setLang(langLocal);
+    }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("lang", JSON.stringify(lang));
+  }, [lang]);
   let store = {
     lang: {
       data: lang,

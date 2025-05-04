@@ -23,7 +23,6 @@ function ShopCategory() {
     setSorting(event.target.value);
   };
   useEffect(() => {
-    console.log(sorting);
     if (sorting == "low_to_high") {
       setResultProds([...resultProds].sort((a, b) => a.price - b.price));
     } else if (sorting == "high_to_low") {
@@ -98,12 +97,22 @@ function ShopCategory() {
   //---- color filter ----
   const [colorFilter, setColorFilter] = useState("");
   function filterByColor() {
-    setResultProds(filteredProds?.filter((elem) => elem.color == colorFilter));
+    setResultProds(resultProds?.filter((elem) => elem.color == colorFilter));
   }
   function clearFilterByColor() {
     setResultProds(filteredProds);
     setColorFilter("");
   }
+  //---- category ----
+  const [category, setCategory] = useState("");
+  function filterByCategory() {
+    setResultProds(resultProds?.filter((elem) => elem.category == category));
+  }
+  function clearFilterByCategory() {
+    setResultProds(filteredProds);
+    setCategory("");
+  }
+  //--------------------
   let topProducts = [...products].sort((a, b) => b.price - a.price);
   //---- pagination ----
   const itemsPerPage = 9;
@@ -158,21 +167,38 @@ function ShopCategory() {
             <div className={shopCss.categories}>
               <ul>
                 <li>
-                  <input type="radio" name="category" />
+                  <input
+                    type="radio"
+                    name="category"
+                    onChange={() => {
+                      setCategory("Men");
+                    }}
+                  />
                   <label>
-                    {langCheck.categories.listItems.men[store.lang.data]} (3600)
+                    {langCheck.categories.listItems.men[store.lang.data]}
                   </label>
                 </li>
                 <li>
-                  <input type="radio" name="category" />
+                  <input
+                    type="radio"
+                    name="category"
+                    onChange={() => {
+                      setCategory("Women");
+                    }}
+                  />
                   <label>
                     {" "}
                     {langCheck.categories.listItems.women[store.lang.data]}{" "}
-                    (3600)
                   </label>
                 </li>
                 <li>
-                  <input type="radio" name="category" />
+                  <input
+                    type="radio"
+                    name="category"
+                    onChange={() => {
+                      setCategory("Accessories");
+                    }}
+                  />
                   <label>
                     {" "}
                     {
@@ -180,41 +206,69 @@ function ShopCategory() {
                         store.lang.data
                       ]
                     }{" "}
-                    (3600)
                   </label>
                 </li>
                 <li>
-                  <input type="radio" name="category" />
+                  <input
+                    type="radio"
+                    name="category"
+                    onChange={() => {
+                      setCategory("Footwear");
+                    }}
+                  />
                   <label>
                     {" "}
                     {
                       langCheck.categories.listItems.footwear[store.lang.data]
                     }{" "}
-                    (3600)
                   </label>
                 </li>
 
                 <li>
-                  <input type="radio" name="category" />
+                  <input
+                    type="radio"
+                    name="category"
+                    onChange={() => {
+                      setCategory("Electronics");
+                    }}
+                  />
                   <label>
-                    {" "}
                     {
                       langCheck.categories.listItems.electronics[
                         store.lang.data
                       ]
                     }{" "}
-                    (3600)
                   </label>
                 </li>
                 <li>
-                  <input type="radio" name="category" />
+                  <input
+                    type="radio"
+                    name="category"
+                    onChange={() => {
+                      setCategory("Food");
+                    }}
+                  />
                   <label>
                     {" "}
                     {langCheck.categories.listItems.food[store.lang.data]}{" "}
-                    (3600)
                   </label>
                 </li>
               </ul>
+              <div className={shopCss.buttons}>
+                <button className={shopCss.blue_btn} onClick={filterByCategory}>
+                  {langCheck.categories.buttons.go[store.lang.data]}
+                </button>
+                <button
+                  className={shopCss.normal_btn}
+                  onClick={clearFilterByCategory}
+                  // disabled={category.length === 0}
+                >
+                  {langCheck.categories.buttons.clear[store.lang.data]}{" "}
+                  <DeleteOutlinedIcon
+                    style={{ color: "gray", fontSize: "15px" }}
+                  />
+                </button>
+              </div>
             </div>
           </div>
           <div className={shopCss.filters_container}>
@@ -222,7 +276,7 @@ function ShopCategory() {
               <p> {langCheck.filters.header[store.lang.data]}</p>
             </div>
             <div className={shopCss.filters}>
-              <div className={shopCss.brands_filters}>
+              {/* <div className={shopCss.brands_filters}>
                 <p>{langCheck.filters.brands.header[store.lang.data]}</p>{" "}
                 <ul>
                   <li>
@@ -246,7 +300,7 @@ function ShopCategory() {
                     <label>Samsung(19)</label>
                   </li>
                 </ul>
-              </div>
+              </div> */}
               <div className={shopCss.colors_filters}>
                 <p> {langCheck.filters.colors.header[store.lang.data]}</p>{" "}
                 <ul>
@@ -318,13 +372,13 @@ function ShopCategory() {
                 </ul>
                 <div className={shopCss.buttons}>
                   <button className={shopCss.blue_btn} onClick={filterByColor}>
-                    Go
+                    {langCheck.filters.colors.buttons.go[store.lang.data]}
                   </button>
                   <button
                     className={shopCss.normal_btn}
                     onClick={clearFilterByColor}
                   >
-                    Clear{" "}
+                    {langCheck.filters.colors.buttons.clear[store.lang.data]}{" "}
                     <DeleteOutlinedIcon
                       style={{ color: "gray", fontSize: "15px" }}
                     />
@@ -348,13 +402,13 @@ function ShopCategory() {
                 </p>
                 <div className={shopCss.buttons}>
                   <button className={shopCss.blue_btn} onClick={filterByPrice}>
-                    Go
+                    {langCheck.priceFilter.buttons.go[store.lang.data]}
                   </button>
                   <button
                     className={shopCss.normal_btn}
                     onClick={clearFilterByPrice}
                   >
-                    Clear{" "}
+                    {langCheck.priceFilter.buttons.clear[store.lang.data]}{" "}
                     <DeleteOutlinedIcon
                       style={{ color: "gray", fontSize: "15px" }}
                     />
@@ -367,7 +421,6 @@ function ShopCategory() {
         <div className={shopCss.products_container}>
           <div className={shopCss.products_header}>
             <div className={shopCss.products_header_filters}>
-              {" "}
               <button className={shopCss.filter_btn} onClick={toggleSideBar}>
                 <FilterAltIcon style={{ color: "#384aeb" }} />
               </button>
@@ -415,7 +468,9 @@ function ShopCategory() {
                       langCheck.products.header.search_inp[store.lang.data]
                     }
                     onChange={(e) => {
-                      setSearchInput(e.target.value);
+                      if (e.target.value.length > 0) {
+                        setSearchInput(e.target.value);
+                      }
                     }}
                   />
 
@@ -438,9 +493,11 @@ function ShopCategory() {
             </div>
           </div>
           {isSearched ? (
-            <p className={shopCss.resultOf}>
-              {langCheck.products.resultOf[store.lang.data]} <i>"{query}"</i>
-            </p>
+            query.length > 0 ? (
+              <p className={shopCss.resultOf}>
+                {langCheck.products.resultOf[store.lang.data]} <i>"{query}"</i>
+              </p>
+            ) : null
           ) : null}
           <div className={shopCss.products_div}>
             {" "}

@@ -14,7 +14,7 @@
   width: 100%;
   height: 100%;
 
-  object-fit: contain;
+  object-fit: cover;
 }
 .product_card_details,
 .trending_product_card_details {
@@ -29,10 +29,12 @@
 h3 {
   color: gray;
   font-weight: 300;
+  text-align: center;
 }
 .product_card_details h1 {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: 20px;
+  text-align: center;
 }
 .product_card_buttons {
   position: absolute;
